@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React Project - Random Quote Machine</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <!-- Load Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Your custom script here -->
+    <script type="text/babel">
+        //Quote and Name
+        var quotes = [
+        ["The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.","Helen Keller"],
+        ["Keep love in your heart. A life without it is like a sunless garden when the flowers are dead.","Oscar Wilde"],
+        ["It is during our darkest moments that we must focus to see the light.","Aristotle"],
+        ["Try to be a rainbow in someone's cloud.","Maya Angelou"],
+        ["Find a place inside where there's joy, and the joy will burn out the pain.","Joseph Campbell"],
+        ["Nothing is impossible, the word itself says 'I'm possible'!","Audrey Hepburn"],
+        ["Don't judge each day by the harvest you reap but by the seeds that you plant.","Robert Louis Stevenson"],
+        ["Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.","Buddha"],
+        ["The only thing necessary for the triumph of evil is for good men to do nothing.","Edmund Burke"],
+        ["One of the most beautiful qualities of true friendship is to understand and to be understood.","Lucius Annaeus Seneca"],
+        ["Where there is love there is life.","Mahatma Gandhi"],
+        ["Love is composed of a single soul inhabiting two bodies.","Aristotle"],
+        ["Do not go where the path may lead, go instead where there is no path and leave a trail.","Ralph Waldo Emerson"],
+        ["Success is not final, failure is not fatal: it is the courage to continue that counts.","Winston Churchill"],
+        ["Do all things with love.","Og Mandino"]
+        ];
+
+        //React
+        class MyQuote extends React.Component {
+            constructor(props){
+                super(props);
+                
+                this.state = {
+                    qtext: '',
+                    qauthor: ''
+                };
+                this.newQuote = this.newQuote.bind(this);
+            }
+            
+            newQuote(){
+                //create a random number
+                var ran_number = Math.floor(Math.random()*quotes.length);
+                this.setState ({
+                    qtext: quotes[ran_number][0],
+                    qauthor: quotes[ran_number][1]
+                });
+            }
+            
+            //initiate newQuote when the component renders and gets placed on the DOM
+            componentDidMount(){
+                this.newQuote();
+            }
+
+            render(){
+                return(
+                    <div id="quote-box">
+                        <blockquote>
+                            <q id="text">{this.state.qtext}</q>
+                            <p id="author">- {this.state.qauthor}</p>
+                        </blockquote>
+                        <div id="btn_container">
+                            <a id="new-quote" onClick={this.newQuote}>New Quote</a>
+                            {/* "Template literals" is used in the tweet button. */}
+                            <a id="tweet-quote" target="_blank" href={`https://twitter.com/intent/tweet/?text=${this.state.qtext} - ${this.state.qauthor}`}>Tweet</a>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <MyQuote/>,
+            document.getElementById("container")
+        );
+    </script>
+  </body>
+</html>
